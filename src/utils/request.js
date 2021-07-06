@@ -1,30 +1,31 @@
 import axios from 'axios'
-axios.defaults.baseURL = 'baseURL'
-//post请求头
-axios.defaults.headers.post['Content-Type'] = 'application/json'
-//设置超时
-axios.defaults.timeout = 10000
-// 请求拦截
-axios.interceptors.request.use(
-  (config) => {
+const http = axios.create({
+  baseURL: 'https://wwww.baidu.com', //服务器地址
+})
+// 添加请求拦截器
+http.interceptors.request.use(
+  function (config) {
+    // 在发送请求之前做些什么
     return config
   },
-  (error) => {
+  function (error) {
+    // 对请求错误做些什么
     return Promise.reject(error)
   }
 )
-// 响应拦截
-axios.interceptors.response.use(
-  (res) => {
-    if (res.status == 200) {
-      if (res.data.code === 2000) {
-        return Promise.resolve(res.data)
-      } else {
-      }
-    } else {
-      return Promise.reject(res)
-    }
+
+// 添加响应拦截器
+http.interceptors.response.use(
+  function (response) {
+    // 2xx 范围内的状态码都会触发该函数。
+    // 对响应数据做点什么
+    return response
   },
-  (error) => {}
+  function (error) {
+    // 超出 2xx 范围的状态码都会触发该函数。
+    // 对响应错误做点什么
+    return Promise.reject(error)
+  }
 )
-export default axios
+
+export default http

@@ -36,7 +36,7 @@ export const routes = [
     component: () => import('views/404.vue'),
   },
   {
-    path: '/:pathMatch(.*)',
+    path: '/:pathMatch(.*)', 
     redirect: '/404',
   },
 ]
